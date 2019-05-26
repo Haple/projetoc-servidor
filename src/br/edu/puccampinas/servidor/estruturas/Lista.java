@@ -182,12 +182,12 @@ public class Lista<TipoItem> {
    * @throws Exception Caso o valor da posição seja inválido (menor ou igual a zero ou maior que o
    *         tamanho da lista) ou a lista não tenha nenhum registro
    */
-  public TipoItem getItem(int posicao) throws Exception {
+  public TipoItem getItem(int posicao) throws RuntimeException {
     if (this.isVazia())
-      throw new Exception("Nada guardado");
+      throw new RuntimeException("Nada guardado");
 
     if (posicao <= 0 || posicao > this.getTamanho())
-      throw new Exception("Posição inválida!");
+      throw new RuntimeException("Posição inválida!");
 
     if (posicao == this.getTamanho())
       return this.ultimo.getItem();
@@ -200,6 +200,27 @@ public class Lista<TipoItem> {
       return item.getItem();
 
     }
+  }
+
+  /**
+   * Verifica se um item está guardado na lista.
+   * 
+   * @param item
+   * @return devolve a posição do item encontrado
+   * @throws RuntimeException caso não seja possível encontrar o item
+   */
+  public int getItem(TipoItem item) throws RuntimeException {
+    if (item == null)
+      throw new RuntimeException("Item inválido!");
+    if (this.isVazia())
+      throw new RuntimeException("Nada guardado");
+
+    for (int i = 1; i <= this.tamanho; i++) {
+      if (item.equals(this.getItem(i))) {
+        return i;
+      }
+    }
+    return 0;
   }
 
   /**
