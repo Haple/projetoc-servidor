@@ -7,16 +7,41 @@ import br.edu.puccampinas.servidor.estruturas.Lista;
 import br.edu.puccampinas.servidor.musica.daos.Musicas;
 import br.edu.puccampinas.servidor.musica.dbos.Musica;
 
+/**
+ * Classe responsável por interpretar uma requisição de cliente.
+ * 
+ * @author aleph
+ *
+ */
 public class TratadorDeRequisicao extends Thread {
 
   private Socket conexao;
 
+  /**
+   * Cria uma classe do tipo TratadorDeRequisicao.
+   * 
+   * Verifica se a conexao recebida não está vazia.
+   * 
+   * @param conexao socket da requisição
+   * @throws Exception caso o socket da conexão esteja ausente
+   */
   public TratadorDeRequisicao(Socket conexao) throws Exception {
     if (conexao == null)
       throw new Exception("Conexao ausente");
     this.conexao = conexao;
   }
 
+  /**
+   * Interpreta o comando recebido na requisição.
+   * 
+   * Comandos:
+   * <ol>
+   * <li>CON - responde uma requisição de consulta de músicas enviando cada música para o
+   * cliente</li>
+   * <li>Qualquer outro comando é considerado inválido e o cliente receberá um comunicado com o
+   * comando INV</li>
+   * </ol>
+   */
   public void run() {
     try (Pedido requisicao = new Pedido(conexao)) {
       Comunicado comunicado = requisicao.receber();
@@ -39,13 +64,6 @@ public class TratadorDeRequisicao extends Thread {
     }
   }
 
-  /**
-   * Responde uma requisição de consulta de músicas com a lista de músicas
-   * 
-   * @param requisicao
-   * @param comunicado
-   * @throws Exception
-   */
   private void consultarMusicas(Pedido requisicao, Comunicado comunicado) throws Exception {
     String chaveDeBusca = comunicado.getComplemento(0);
     if (chaveDeBusca == null)

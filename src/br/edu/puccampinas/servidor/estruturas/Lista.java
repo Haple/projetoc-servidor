@@ -1,6 +1,22 @@
 package br.edu.puccampinas.servidor.estruturas;
 
+/**
+ * Classe responsável por representar uma lista de itens.
+ * 
+ * @author aleph
+ *
+ * @param <TipoItem> representa o tipo de itens que a lista deve armazenar
+ */
 public class Lista<TipoItem> {
+  /**
+   * Classe responsável por representar um nó de uma lista.
+   * 
+   * Um nó é representado por um item e o próximo nó em que ele está ligado, dessa forma, criando
+   * uma lista encadeada.
+   * 
+   * @author aleph
+   *
+   */
   private class No {
     private TipoItem item;
     private No proximo;
@@ -37,7 +53,12 @@ public class Lista<TipoItem> {
     this.tamanho = 0;
   }
 
-  // insere no final da lista
+  /**
+   * Insere no final da lista
+   * 
+   * @param item Item a ser inserido
+   * @throws Exception Caso o valor a ser inserido seja nulo
+   */
   public void insereItem(TipoItem item) throws Exception {
     if (item == null)
       throw new Exception("Valor ausente");
@@ -53,7 +74,14 @@ public class Lista<TipoItem> {
     this.tamanho++;
   }
 
-  // insere em uma posição especifica
+  /**
+   * Insere em uma posição especifica.
+   * 
+   * @param item Item a ser inserido
+   * @param posicao Posicao na lista em que o item deve ser inserido
+   * @throws Exception Caso o valor da posição seja inválido (menor ou igual a zero ou maior que o
+   *         tamanho da lista) ou o valor a ser inserido seja nulo
+   */
   public void insereItem(TipoItem item, int posicao) throws Exception {
     if (item == null)
       throw new Exception("Valor ausente");
@@ -86,7 +114,11 @@ public class Lista<TipoItem> {
     }
   }
 
-  // remove do inicio da lista
+  /**
+   * Remove do inicio da lista.
+   * 
+   * @throws Exception Caso não tenha nenhum item na lista.
+   */
   public void removeItem() throws Exception {
     if (this.isVazia())
       throw new Exception("Nada guardado");
@@ -95,7 +127,13 @@ public class Lista<TipoItem> {
     this.tamanho--;
   }
 
-  // remove de uma posição específica
+  /**
+   * Remove de uma posição específica.
+   * 
+   * @param posicao Posição do item que deve ser removido
+   * @throws Exception Caso o valor da posição seja inválido (menor ou igual a zero ou maior que o
+   *         tamanho da lista) ou a lista não tenha nenhum registro
+   */
   public void removeItem(int posicao) throws Exception {
     if (this.isVazia())
       throw new Exception("Nada guardado");
@@ -123,7 +161,12 @@ public class Lista<TipoItem> {
     }
   }
 
-  // recupera o item da primeira posicao
+  /**
+   * Recupera o item da primeira posição.
+   * 
+   * @return Devolve o item da primeira posição da lista
+   * @throws Exception Caso não tenha nada guardado na lista.
+   */
   public TipoItem getItem() throws Exception {
     if (this.isVazia())
       throw new Exception("Nada guardado");
@@ -131,7 +174,14 @@ public class Lista<TipoItem> {
     return this.primeiro.getItem();
   }
 
-  // recupera o item de uma posicao especifica
+  /**
+   * Recupera o item de uma posição específica.
+   * 
+   * @param posicao Posição do item que deve ser encontrado
+   * @return O item da posição especificada
+   * @throws Exception Caso o valor da posição seja inválido (menor ou igual a zero ou maior que o
+   *         tamanho da lista) ou a lista não tenha nenhum registro
+   */
   public TipoItem getItem(int posicao) throws Exception {
     if (this.isVazia())
       throw new Exception("Nada guardado");
@@ -152,11 +202,33 @@ public class Lista<TipoItem> {
     }
   }
 
+  /**
+   * Verifica se a lista está vazia.
+   * 
+   * @return Verdadeiro se a lista estiver vazia e falso caso contrário.
+   */
   public boolean isVazia() {
     return this.primeiro == null;
   }
 
+  /**
+   * Busca o tamanho da lista.
+   * 
+   * @return Devolve um inteiro com o tamanho da lista
+   */
   public int getTamanho() {
     return this.tamanho;
+  }
+
+  @Override
+  public String toString() {
+    String retorno = "";
+    for (int j = 1; j <= this.getTamanho(); j++) {
+      try {
+        retorno += " " + this.getItem(j);
+      } catch (Exception e) {
+      }
+    }
+    return retorno.substring(1);
   }
 }

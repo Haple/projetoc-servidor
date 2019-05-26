@@ -1,8 +1,26 @@
 package br.edu.puccampinas.servidor;
 
-import br.edu.puccampinas.servidor.utils.Teclado;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
+/**
+ * Classe principal.
+ * 
+ * Inicia o servidor com uma porta personalizada ou uma porta padrão.
+ *
+ * @author aleph
+ *
+ */
 public class Servidor {
+
+  private static BufferedReader teclado = new BufferedReader(new InputStreamReader(System.in));
+
+  /**
+   * Recebe como argumento uma porta customizada para iniciar o servidor
+   * 
+   * @param args argumentos recebidos ao iniciar o programa
+   */
   public static void main(String[] args) {
     if (args.length > 1) {
       System.err.println("Uso esperado: java Servidor [PORTA]\n");
@@ -22,7 +40,10 @@ public class Servidor {
       System.out.println("O servidor esta ativo! Para desativa-lo,");
       System.out.println("use o comando \"desativar\"\n");
       System.out.print("> ");
-      comando = Teclado.getUmString();
+      try {
+        comando = teclado.readLine();
+      } catch (IOException erro) {
+      }
       if (comando.toLowerCase().equals("desativar")) {
         System.out.println("O servidor foi desativado!\n");
         System.exit(0);

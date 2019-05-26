@@ -8,9 +8,25 @@ import br.edu.puccampinas.servidor.musica.bd.MeuResultSet;
 import br.edu.puccampinas.servidor.musica.dbos.Musica;
 
 
-
+/**
+ * Classe responsável por expor os métodos de busca de músicas.
+ * 
+ * @author aleph
+ *
+ */
 public class Musicas {
 
+
+  /**
+   * Busca músicas de acordo com a chave de busca.
+   * 
+   * 
+   * @param chaveDeBusca título, cantor ou estilo da música desejada
+   * @return seram retornadas todas as músicas em que o título, cantor ou estilo sejam iguais à
+   *         chave de busca
+   * @throws Exception Caso não seja encontrada nenhuma música ou ocorra um erro de conexão com o
+   *         banco
+   */
   public static Lista<Musica> getMusicas(String chaveDeBusca) throws Exception {
 
     MeuResultSet resultado = null;
@@ -23,90 +39,6 @@ public class Musicas {
       BDSQLServer.COMANDO.setString(1, chaveDeBusca);
       BDSQLServer.COMANDO.setString(2, chaveDeBusca);
       BDSQLServer.COMANDO.setString(3, chaveDeBusca);
-      resultado = (MeuResultSet) BDSQLServer.COMANDO.executeQuery();
-      if (!resultado.first())
-        throw new Exception("Nada encontrado");
-      do {
-        musicas.insereItem(new Musica(resultado.getInt("CODIGO"), resultado.getString("TITULO"),
-            resultado.getString("CANTOR"), resultado.getString("ESTILO"),
-            resultado.getFloat("PRECO"), resultado.getInt("DURACAO")));
-      } while (resultado.next());
-    } catch (SQLException erro) {
-      throw new Exception("Erro ao recuperar músicas");
-    }
-
-    return musicas;
-  }
-
-  public static Lista<Musica> getMusicasByTitulo(String titulo) throws Exception {
-
-    MeuResultSet resultado = null;
-    Lista<Musica> musicas = new Lista<Musica>();
-    try {
-      String sql;
-
-      sql = "SELECT * FROM MUSICAS" + " WHERE TITULO = ?";
-      // + " AND (?2 IS NULL OR ?2 = '' OR CANTOR = ?2)"
-      // + " AND (?3 IS NULL OR ?3 = '' OR ESTILO = ?3)";
-
-      BDSQLServer.COMANDO.prepareStatement(sql);
-      BDSQLServer.COMANDO.setString(1, titulo);
-      resultado = (MeuResultSet) BDSQLServer.COMANDO.executeQuery();
-      if (!resultado.first())
-        throw new Exception("Nada encontrado");
-      do {
-        musicas.insereItem(new Musica(resultado.getInt("CODIGO"), resultado.getString("TITULO"),
-            resultado.getString("CANTOR"), resultado.getString("ESTILO"),
-            resultado.getFloat("PRECO"), resultado.getInt("DURACAO")));
-      } while (resultado.next());
-    } catch (SQLException erro) {
-      throw new Exception("Erro ao recuperar músicas");
-    }
-
-    return musicas;
-  }
-
-  public static Lista<Musica> getMusicasByCantor(String cantor) throws Exception {
-
-    MeuResultSet resultado = null;
-    Lista<Musica> musicas = new Lista<Musica>();
-    try {
-      String sql;
-
-      sql = "SELECT * FROM MUSICAS" + " WHERE CANTOR = ?";
-      // + " AND (?2 IS NULL OR ?2 = '' OR CANTOR = ?2)"
-      // + " AND (?3 IS NULL OR ?3 = '' OR ESTILO = ?3)";
-
-      BDSQLServer.COMANDO.prepareStatement(sql);
-      BDSQLServer.COMANDO.setString(1, cantor);
-      resultado = (MeuResultSet) BDSQLServer.COMANDO.executeQuery();
-      if (!resultado.first())
-        throw new Exception("Nada encontrado");
-      do {
-        musicas.insereItem(new Musica(resultado.getInt("CODIGO"), resultado.getString("TITULO"),
-            resultado.getString("CANTOR"), resultado.getString("ESTILO"),
-            resultado.getFloat("PRECO"), resultado.getInt("DURACAO")));
-      } while (resultado.next());
-    } catch (SQLException erro) {
-      throw new Exception("Erro ao recuperar músicas");
-    }
-
-    return musicas;
-  }
-
-  public static Lista<Musica> getMusicasByEstilo(String estilo) throws Exception {
-
-    MeuResultSet resultado = null;
-    Lista<Musica> musicas = new Lista<Musica>();
-    try {
-      String sql;
-
-      sql = "SELECT * FROM MUSICAS" + " WHERE ESTILO = ?";
-      // + " AND (?2 IS NULL OR ?2 = '' OR CANTOR = ?2)"
-      // + " AND (?3 IS NULL OR ?3 = '' OR ESTILO = ?3)";
-
-      BDSQLServer.COMANDO.prepareStatement(sql);
-      BDSQLServer.COMANDO.setString(1, estilo);
       resultado = (MeuResultSet) BDSQLServer.COMANDO.executeQuery();
       if (!resultado.first())
         throw new Exception("Nada encontrado");
