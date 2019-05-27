@@ -185,6 +185,12 @@ public class Musica implements Cloneable {
     return true;
   }
 
+  /**
+   * Cria uma nova música baseando-se em outra música.
+   * 
+   * @param modelo
+   * @throws Exception caso a música seja nula.
+   */
   public Musica(Musica modelo) throws Exception {
     if (modelo == null) {
       throw new Exception("Musica não pode ser nula");
