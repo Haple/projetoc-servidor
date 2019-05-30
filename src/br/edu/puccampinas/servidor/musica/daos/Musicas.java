@@ -34,11 +34,11 @@ public class Musicas {
     try {
       String sql;
 
-      sql = "SELECT * FROM MUSICAS" + " WHERE TITULO = ? OR CANTOR = ? OR ESTILO = ?";
+      sql = "SELECT * FROM MUSICAS" + " WHERE TITULO LIKE ? OR CANTOR LIKE ? OR ESTILO LIKE ?";
       BDSQLServer.COMANDO.prepareStatement(sql);
-      BDSQLServer.COMANDO.setString(1, chaveDeBusca);
-      BDSQLServer.COMANDO.setString(2, chaveDeBusca);
-      BDSQLServer.COMANDO.setString(3, chaveDeBusca);
+      BDSQLServer.COMANDO.setString(1, "%" + chaveDeBusca + "%");
+      BDSQLServer.COMANDO.setString(2, "%" + chaveDeBusca + "%");
+      BDSQLServer.COMANDO.setString(3, "%" + chaveDeBusca + "%");
       resultado = (MeuResultSet) BDSQLServer.COMANDO.executeQuery();
       if (!resultado.first())
         throw new Exception("Nada encontrado");
